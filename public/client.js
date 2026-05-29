@@ -6,6 +6,7 @@ const CATEGORY = "Colorized Deck Box";
 const WHATSAPP_NUMBER = "6281998190083";
 const DOMESTIC_PRICE_IDR = 250000;
 const INTERNATIONAL_PRICE_USD = 30;
+const USD_TO_IDR_RATE = 16500;
 const TEST_LOCATION_STORAGE_KEY = "uniprints-test-location";
 
 const T = {
@@ -13,9 +14,9 @@ const T = {
     regionPrice:   "Harga Indonesia",
     notePrice:     "Checkout lokal menggunakan harga IDR.",
     locationUnknown: "Lokasi tidak diketahui",
-    allowLocation:  "Izinkan lokasi untuk hasil akurat...",
-    locationBlocked:"Lokasi diblokir — klik untuk aktifkan",
-    locationOpenSettings:"Izinkan akses lokasi di browser Anda",
+    allowLocation:  "Mendeteksi lokasi...",
+    locationBlocked:"Lokasi browser tidak aktif",
+    locationOpenSettings:"Lokasi diperkirakan dari IP",
     btnBeli:        "Order",
     modalTitle:     "Detail Pemesanan",
     labelNama:      "Nama Lengkap",
@@ -49,7 +50,8 @@ const T = {
     labelTotalPrice:"Total",
     sectionRecipient:"Penerima",
     sectionShipping:"Pengiriman",
-    labelTotal:    "Total Pembayaran",
+    labelTotal:    "Total Produk",
+    shippingFeeNote:"Belum termasuk fee pengiriman.",
     disclaimer:   "Data Anda hanya digunakan untuk memproses pesanan via WhatsApp.",
     featuresTitle:"Kenapa UniPrints?",
     featureQuality:"Premium Quality",
@@ -68,15 +70,15 @@ const T = {
     heroSubtitle1: "Koleksi deck box berwarna dengan finishing premium.",
     heroSubtitle2: "Pilih warna favoritmu, checkout langsung via WhatsApp.",
     panelTag:     "Premium Deck Box",
-    locationDefault:"Izinkan lokasi",
+    locationDefault:"Indonesia",
   },
   en: {
     regionPrice:   "International price",
     notePrice:     "Orders outside Indonesia use USD pricing.",
     locationUnknown: "Location unknown",
-    allowLocation: "Allow location for accurate pricing...",
-    locationBlocked:"Location blocked — tap to enable",
-    locationOpenSettings:"Allow location access in your browser",
+    allowLocation: "Detecting location...",
+    locationBlocked:"Browser location is disabled",
+    locationOpenSettings:"Location is estimated from IP",
     btnBeli:       "Buy Now",
     modalTitle:    "Order Details",
     labelNama:     "Full Name",
@@ -110,7 +112,8 @@ const T = {
     labelTotalPrice:"Total",
     sectionRecipient:"Recipient",
     sectionShipping:"Shipping",
-    labelTotal:   "Total Payment",
+    labelTotal:   "Product Total",
+    shippingFeeNote:"Shipping fee is not included.",
     disclaimer:   "Your data is only used to process orders via WhatsApp.",
     featuresTitle:"Why UniPrints?",
     featureQuality:"Premium Quality",
@@ -129,7 +132,7 @@ const T = {
     heroSubtitle1:"Colored deck box collection with premium finishing.",
     heroSubtitle2:"Choose your favorite color, checkout directly via WhatsApp.",
     panelTag:     "Premium Deck Box",
-    locationDefault:"Allow location",
+    locationDefault:"Detecting location",
   },
 };
 
@@ -165,11 +168,7 @@ function applyTranslations() {
 
   const locEl = $("#locationText");
   if (locEl) {
-    if (state.location.source === "gps" || state.location.source === "test-override") {
-      locEl.textContent = formatLocationLabel();
-    } else {
-      locEl.textContent = t("locationDefault");
-    }
+    locEl.textContent = formatLocationLabel();
     locEl.style.cursor = "";
     locEl.onclick = null;
   }
@@ -247,6 +246,8 @@ function applyTranslations() {
 
   const modalTotalLabel = $(".modal-total-label");
   if (modalTotalLabel) modalTotalLabel.textContent = t("labelTotal");
+  const shippingNote = $("#modalShippingNote");
+  if (shippingNote) shippingNote.textContent = t("shippingFeeNote");
 
   const submitBtn = $(".modal-submit-btn");
   if (submitBtn) submitBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> ${t("btnKirim")}`;
@@ -470,12 +471,7 @@ function normalizeProduct(row) {
 }
 
 // ── Location ───────────────────────────────────────────────
-async function detectLocation(options = {}) {
-  // Show location prompt immediately for better UX
-  if (navigator.geolocation) {
-    showToast(T.id.allowLocation, 6000);
-  }
-
+async function detectLocation() {
   const testLocation = readTestLocationOverride();
   if (testLocation) {
     applyLocation(testLocation);
@@ -483,18 +479,20 @@ async function detectLocation(options = {}) {
     return;
   }
 
-  applyLocation(inferLocationFromBrowser());
+  const inferredLocation = inferLocationFromBrowser();
+  applyLocation(inferredLocation);
+  syncModalLocation(inferredLocation);
 
-  // Fetch location from API in background (non-blocking)
+  // Vercel fills this endpoint from IP headers, so it does not trigger browser GPS permission.
   fetch("/api/location", { headers: { accept: "application/json" } })
     .then(r => r.ok ? r.json() : null)
-    .then(api => { if (api?.countryCode) applyLocation(api); })
+    .then(api => {
+      if (api?.countryCode) {
+        applyLocation(api);
+        syncModalLocation(api);
+      }
+    })
     .catch(() => {});
-
-  if (navigator.geolocation) {
-    if (options.forcePrecise) await detectPreciseByGPS();
-    else detectPreciseByGPS();
-  }
 }
 
 function inferLocationFromBrowser() {
@@ -641,54 +639,6 @@ const isoNames = {
   "Asia/Pontianak": "Indonesia",
 };
 
-function detectPreciseByGPS() {
-  return new Promise(resolve => {
-    if (!navigator.geolocation) { resolve(); return; }
-    navigator.geolocation.getCurrentPosition(
-      async pos => {
-        try {
-          const u = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
-          u.searchParams.set("latitude",  pos.coords.latitude);
-          u.searchParams.set("longitude", pos.coords.longitude);
-          u.searchParams.set("localityLanguage", "en");
-          const r = await fetch(u);
-          const d = r.ok ? await r.json() : {};
-          applyLocation({
-            countryCode: d.countryCode || inferCountryFromCoords(pos.coords.latitude, pos.coords.longitude),
-            country: d.countryName || "",
-            region:  d.principalSubdivision || "",
-            city:    d.city || d.locality || "",
-            source:  "gps",
-          });
-        } catch { applyLocation({ countryCode: inferCountryFromCoords(pos.coords.latitude, pos.coords.longitude), source: "coordinates" }); }
-        resolve();
-      },
-      err => {
-        if (err.code === err.PERMISSION_DENIED) {
-          showToast(t("locationBlocked"), 5000);
-          const locEl = $("#locationText");
-          if (locEl) {
-            locEl.textContent = t("locationBlocked");
-            locEl.style.cursor = "pointer";
-            locEl.onclick = () => {
-              showToast(t("locationOpenSettings"), 5000);
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(() => {}, () => {}, { enableHighAccuracy: true, timeout: 8000 });
-              }
-            };
-          }
-        }
-        resolve();
-      },
-      { enableHighAccuracy: true, maximumAge: 600000, timeout: 8000 }
-    );
-  });
-}
-
-function inferCountryFromCoords(lat, lon) {
-  return lat >= -11.2 && lat <= 6.3 && lon >= 94.6 && lon <= 141.1 ? "ID" : "";
-}
-
 function applyLocation(loc) {
   state.location = {
     countryCode: (loc.countryCode || "").toUpperCase(),
@@ -786,7 +736,6 @@ function renderPrice() {
 
   const unit    = getUnitPrice(p);
   const total   = unit.amount * state.quantity;
-  const domestic = isDomesticBuyer();
   const unitText  = formatMoney(unit.currency, unit.amount);
   const totalText = formatMoney(unit.currency, total);
 
@@ -810,16 +759,42 @@ function renderPrice() {
   s(els.locEl,      formatLocationLabel());
 }
 
-function getUnitPrice(product) {
+function getUnitPrice(product, shippingCountry = state.location.countryCode) {
   const p = product || getSelectedProduct();
   if (!p) return { currency: "IDR", amount: DOMESTIC_PRICE_IDR };
-  return isDomesticBuyer()
-    ? { currency: "IDR", amount: p.priceIdr || DOMESTIC_PRICE_IDR }
-    : { currency: "USD", amount: p.priceUsd || INTERNATIONAL_PRICE_USD };
+  const destinationCountry = String(shippingCountry || state.location.countryCode || "ID").toUpperCase();
+  const internationalPriceUsd = p.priceUsd || INTERNATIONAL_PRICE_USD;
+
+  if (destinationCountry && destinationCountry !== "ID") {
+    if (isDomesticBuyer()) {
+      return {
+        currency: "IDR",
+        amount: convertUsdToIdr(internationalPriceUsd),
+        basisCurrency: "USD",
+        basisAmount: internationalPriceUsd,
+      };
+    }
+    return { currency: "USD", amount: internationalPriceUsd };
+  }
+
+  return { currency: "IDR", amount: p.priceIdr || DOMESTIC_PRICE_IDR };
 }
 
 function isDomesticBuyer() {
   return !state.location.countryCode || state.location.countryCode === "ID" || state.location.countryCode === "";
+}
+
+function convertUsdToIdr(amountUsd) {
+  return Math.round((Number(amountUsd) || 0) * USD_TO_IDR_RATE);
+}
+
+function getSelectedShippingCountry() {
+  return String($("#orderCountry")?.value || state.location.countryCode || "ID").toUpperCase();
+}
+
+function formatPriceBasis(unit) {
+  if (!unit?.basisCurrency || !unit?.basisAmount) return "";
+  return ` (${formatMoney(unit.basisCurrency, unit.basisAmount)} x Rp${USD_TO_IDR_RATE.toLocaleString("id-ID")})`;
 }
 
 function formatMoney(currency, amount) {
@@ -865,19 +840,6 @@ function openOrderModal() {
   const overlay = $("#modalOverlay");
   if (!overlay) return;
 
-  // If GPS hasn't been detected yet, ask for location permission first
-  if (state.location.source !== "gps" && state.location.source !== "test-override" && navigator.geolocation) {
-    showToast(t("allowLocation"), 5000);
-    detectPreciseByGPS().then(() => {
-      overlay.classList.add("is-open");
-      document.body.style.overflow = "hidden";
-      updateModalContent();
-      renderPrice();
-      setTimeout(() => $("#orderFullName")?.focus(), 120);
-    });
-    return;
-  }
-
   overlay.classList.add("is-open");
   document.body.style.overflow = "hidden";
   updateModalContent();
@@ -892,6 +854,10 @@ function closeOrderModal() {
 }
 
 function onCountryChange() {
+  updateModalContent();
+}
+
+function updateAddressFieldsForCountry() {
   const country = $("#orderCountry")?.value;
   const isID = country === "ID";
   const indoEl = $("#indoAddressFields");
@@ -911,7 +877,7 @@ function onCountryChange() {
 
 function updateModalContent() {
   const p    = getSelectedProduct();
-  const unit = getUnitPrice(p);
+  const unit = getUnitPrice(p, getSelectedShippingCountry());
   const totalAmount = unit.amount * state.quantity;
 
   const s = (id, val) => { const el = $(id); if (el) el.textContent = val; };
@@ -923,7 +889,7 @@ function updateModalContent() {
   s("#mosQty",   String(state.quantity));
   s("#mosPrice", formatMoney(unit.currency, unit.amount));
   s("#modalTotalPrice", formatMoney(unit.currency, totalAmount));
-  onCountryChange();
+  updateAddressFieldsForCountry();
 }
 
 function handleModalSubmit(e) {
@@ -963,9 +929,10 @@ function handleModalSubmit(e) {
 
 function buildOrderMessage({ fullName, address, country, city, province, postalCode, phone, intZip }) {
   const p     = getSelectedProduct();
-  const unit  = getUnitPrice(p);
+  const unit  = getUnitPrice(p, country);
   const total = formatMoney(unit.currency, unit.amount * state.quantity);
   const price = formatMoney(unit.currency, unit.amount);
+  const priceBasis = formatPriceBasis(unit);
   const isID  = country === "ID";
   const countryName = $("#orderCountry")?.options?.[$("#orderCountry")?.selectedIndex]?.text || country;
 
@@ -975,6 +942,7 @@ function buildOrderMessage({ fullName, address, country, city, province, postalC
 Produk    : ${p.color} Colorized Deck Box
 Jumlah    : ${state.quantity}x @ ${price}
 Total      : ${total}
+Ongkir     : Belum termasuk, dikonfirmasi admin
 
 Data Pemesan:
 Nama       : ${fullName}
@@ -989,8 +957,9 @@ Negara     : Indonesia`;
   return `Hello, I would like to order:
 
 Product    : ${p.color} Colorized Deck Box
-Quantity   : ${state.quantity}x @ ${price}
+Quantity   : ${state.quantity}x @ ${price}${priceBasis}
 Total      : ${total}
+Shipping   : Not included, confirmed by admin
 
 Customer Details:
 Full Name  : ${fullName}
