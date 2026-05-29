@@ -1,0 +1,10 @@
+{
+  "name": "uniprints",
+  "version": "1.0.0",
+  "private": true,
+  "description": "UniPrints Colorized Deck Box storefront for Vercel and Supabase.",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  }
+}
