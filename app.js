@@ -8,6 +8,131 @@ const DOMESTIC_PRICE_IDR = 250000;
 const INTERNATIONAL_PRICE_USD = 30;
 const TEST_LOCATION_STORAGE_KEY = "uniprints-test-location";
 
+const T = {
+  id: {
+    regionPrice:   "Harga Indonesia",
+    notePrice:     "Checkout lokal menggunakan harga IDR.",
+    locationUnknown: "Lokasi tidak diketahui",
+    allowLocation:  "Izinkan lokasi untuk hasil akurat...",
+    locationBlocked:"Lokasi diblokir — klik untuk aktifkan",
+    locationOpenSettings:"Izinkan akses lokasi di browser Anda",
+    btnBeli:        "Order",
+    modalTitle:     "Detail Pemesanan",
+    labelNama:      "Nama Lengkap",
+    labelAlamat:    "Alamat",
+    labelKota:      "Kota",
+    labelProvinsi:  "Provinsi",
+    labelKodePos:   "Kode Pos",
+    labelNegara:    "Negara",
+    labelPhone:     "No. HP / WhatsApp",
+    labelCityInt:   "City",
+    labelZipInt:    "Zip Code",
+    placeholderJalan:"Nama jalan, RT/RW, Kelurahan, Kecamatan",
+    btnKirim:       "Beli via WhatsApp",
+    toastNamaWajib: "Nama lengkap wajib diisi",
+    toastAlamatWajib:"Alamat wajib diisi",
+    toastNegaraWajib:"Negara wajib dipilih",
+    toastKotaWajib: "Kota wajib diisi",
+    toastProvWajib: "Provinsi wajib diisi",
+    toastKodePos:   "Kode pos harus 5 digit angka",
+    gpsSuccess:     "Lokasi terdeteksi!",
+    labelNamaPh:    "Masukkan nama lengkap",
+    labelPhonePh:   "08xxxxxxxxxx",
+    labelAlamatPhID:"Nama jalan, RT/RW, Kelurahan, Kecamatan",
+    labelAlamatPhInt:"Street address, building, city",
+    labelKotaPh:   "Kota",
+    labelProvinsiPh:"Provinsi",
+    labelKodePosPh: "5 angka",
+    labelZipIntPh:  "Zip code",
+    labelSelected:  "Selected",
+    labelQuantity: "Quantity",
+    labelTotalPrice:"Total",
+    sectionRecipient:"Penerima",
+    sectionShipping:"Pengiriman",
+    labelTotal:    "Total Pembayaran",
+    disclaimer:   "Data Anda hanya digunakan untuk memproses pesanan via WhatsApp.",
+    featuresTitle:"Kenapa UniPrints?",
+    featureQuality:"Premium Quality",
+    featQualityDesc:"Material berkualitas tinggi dengan finishing detail untuk perlindungan maksimal deck kartu Anda.",
+    featureFast:  "Fast Production",
+    featFastDesc:  "Proses produksi cepat dan langsung dikirim setelah checkout via WhatsApp.",
+    featureColors: "6 Vibrant Colors",
+    featColorsDesc:"Pilihan 6 warna menarik — Red, Orange, Yellow, Green, Blue, Purple — sesuai kepribadian Anda.",
+    featureCheckout:"Direct Checkout",
+    featCheckoutDesc:"Checkout langsung via WhatsApp — tidak ribet, langsung terhubung dengan admin untuk konfirmasi.",
+    featureDelivery:"Nationwide Delivery",
+    featDeliveryDesc:"Pengiriman ke seluruh Indonesia dan internasional dengan tracking lengkap.",
+    featureRealtime:"Real-time Price",
+    featRealtimeDesc:"Harga otomatis disesuaikan dengan lokasi Anda — domestik dalam IDR, internasional dalam USD.",
+    heroEyebrow:  "Premium Print Product",
+    heroSubtitle1: "Koleksi deck box berwarna dengan finishing premium.",
+    heroSubtitle2: "Pilih warna favoritmu, checkout langsung via WhatsApp.",
+    panelTag:     "Premium Deck Box",
+    locationDefault:"Izinkan lokasi",
+  },
+  en: {
+    regionPrice:   "International price",
+    notePrice:     "Orders outside Indonesia use USD pricing.",
+    locationUnknown: "Location unknown",
+    allowLocation: "Allow location for accurate pricing...",
+    locationBlocked:"Location blocked — tap to enable",
+    locationOpenSettings:"Allow location access in your browser",
+    btnBeli:       "Buy Now",
+    modalTitle:    "Order Details",
+    labelNama:     "Full Name",
+    labelAlamat:   "Street Address",
+    labelKota:     "City",
+    labelProvinsi: "Province / State",
+    labelKodePos:  "Postal Code",
+    labelNegara:   "Country",
+    labelPhone:    "Phone / WhatsApp",
+    labelCityInt:  "City",
+    labelZipInt:   "Zip Code",
+    placeholderJalan:"Street address, building, city",
+    btnKirim:      "Buy via WhatsApp",
+    toastNamaWajib:"Full name is required",
+    toastAlamatWajib:"Address is required",
+    toastNegaraWajib:"Country is required",
+    toastKotaWajib:"City is required",
+    toastProvWajib:"Province / State is required",
+    toastKodePos:  "Postal code must be 5 digits",
+    gpsSuccess:    "Location detected!",
+    labelNamaPh:   "Enter your full name",
+    labelPhonePh:  "+1 234 5678",
+    labelAlamatPhID:"Street address, building, city",
+    labelAlamatPhInt:"Street address, building, city",
+    labelKotaPh:  "City",
+    labelProvinsiPh:"Province / State",
+    labelKodePosPh:"5 digits",
+    labelZipIntPh: "Zip code",
+    labelSelected: "Selected",
+    labelQuantity:"Quantity",
+    labelTotalPrice:"Total",
+    sectionRecipient:"Recipient",
+    sectionShipping:"Shipping",
+    labelTotal:   "Total Payment",
+    disclaimer:   "Your data is only used to process orders via WhatsApp.",
+    featuresTitle:"Why UniPrints?",
+    featureQuality:"Premium Quality",
+    featQualityDesc:"High-quality materials with detailed finishing for maximum protection of your card decks.",
+    featureFast:  "Fast Production",
+    featFastDesc: "Fast production and shipped directly after checkout via WhatsApp.",
+    featureColors:"6 Vibrant Colors",
+    featColorsDesc:"6 attractive colors — Red, Orange, Yellow, Green, Blue, Purple — to match your personality.",
+    featureCheckout:"Direct Checkout",
+    featCheckoutDesc:"Checkout directly via WhatsApp — no hassle, directly connected with admin for confirmation.",
+    featureDelivery:"Nationwide Delivery",
+    featDeliveryDesc:"Shipping across Indonesia and internationally with complete tracking.",
+    featureRealtime:"Real-time Price",
+    featRealtimeDesc:"Prices automatically adjusted based on your location — IDR for domestic, USD for international.",
+    heroEyebrow:  "Premium Print Product",
+    heroSubtitle1:"Colored deck box collection with premium finishing.",
+    heroSubtitle2:"Choose your favorite color, checkout directly via WhatsApp.",
+    panelTag:     "Premium Deck Box",
+    locationDefault:"Allow location",
+  },
+};
+
 const FALLBACK_PRODUCTS = [
   { slug: "red-colorized-deck-box",    name: "Colorized Deck Box - Red",    category: CATEGORY, color: "Red",    colorHex: "#c4162a", priceIdr: DOMESTIC_PRICE_IDR, priceUsd: INTERNATIONAL_PRICE_USD, stock: 12, frontImage: "assets/red-front.jpeg",       backImage: "assets/red-back-side.jpeg"    },
   { slug: "orange-colorized-deck-box", name: "Colorized Deck Box - Orange", category: CATEGORY, color: "Orange", colorHex: "#e77817", priceIdr: DOMESTIC_PRICE_IDR, priceUsd: INTERNATIONAL_PRICE_USD, stock: 12, frontImage: "assets/orange-front.jpeg",   backImage: "assets/orange-back-side.jpeg" },
@@ -31,6 +156,112 @@ const $ = (sel, fallback) => document.querySelector(sel) ?? fallback;
 
 const rupiah = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 });
 
+const lang = () => state.location.countryCode && state.location.countryCode !== "ID" ? "en" : "id";
+const t   = key => T[lang()]?.[key] ?? T.id[key] ?? key;
+
+// ── i18n ───────────────────────────────────────────────────
+function applyTranslations() {
+  const l = lang();
+
+  const locEl = $("#locationText");
+  if (locEl) {
+    if (state.location.source === "gps" || state.location.source === "test-override") {
+      locEl.textContent = formatLocationLabel();
+    } else {
+      locEl.textContent = t("locationDefault");
+    }
+    locEl.style.cursor = "";
+    locEl.onclick = null;
+  }
+
+  const re = $("#priceRegion");
+  const no = $("#priceNote");
+  if (re) re.textContent = t("regionPrice");
+  if (no) no.textContent = t("notePrice");
+
+  const btn = $("#buyButton");
+  if (btn) btn.querySelector(".buy-button-label").textContent = t("btnBeli");
+
+  const ft = $(".features-title");
+  if (ft) ft.textContent = t("featuresTitle");
+
+  const featDescs = [
+    [t("featureQuality"), t("featQualityDesc")],
+    [t("featureFast"),     t("featFastDesc")],
+    [t("featureColors"),   t("featColorsDesc")],
+    [t("featureCheckout"), t("featCheckoutDesc")],
+    [t("featureDelivery"), t("featDeliveryDesc")],
+    [t("featureRealtime"), t("featRealtimeDesc")],
+  ];
+  document.querySelectorAll(".feature-card").forEach((card, i) => {
+    if (featDescs[i]) {
+      const h3 = card.querySelector("h3");
+      const p  = card.querySelector("p");
+      if (h3) h3.textContent = featDescs[i][0];
+      if (p)  p.textContent  = featDescs[i][1];
+    }
+  });
+
+  const eyebrow = $(".hero-eyebrow");
+  if (eyebrow) eyebrow.textContent = t("heroEyebrow");
+
+  const subtitle = $(".hero-subtitle");
+  if (subtitle) subtitle.innerHTML = t("heroSubtitle1") + "<br />" + t("heroSubtitle2");
+
+  const panelTag = $(".panel-header-tag");
+  if (panelTag) panelTag.textContent = t("panelTag");
+
+  const selLabel = document.querySelector(".selection-row-label");
+  if (selLabel) selLabel.textContent = t("labelSelected");
+  const qtyLabel = document.querySelector(".quantity-label");
+  if (qtyLabel) qtyLabel.textContent = t("labelQuantity");
+  const totalLabel = document.querySelector(".total-label");
+  if (totalLabel) totalLabel.textContent = t("labelTotalPrice");
+
+  const mt = $("#modalTitle");
+  if (mt) mt.textContent = t("modalTitle");
+
+  const modalSections = document.querySelectorAll(".modal-section-label");
+  if (modalSections[0]) modalSections[0].textContent = t("sectionRecipient");
+  if (modalSections[1]) modalSections[1].textContent = t("sectionShipping");
+
+  const labelMap = {
+    "#orderFullName":   [t("labelNama"),     t("labelNamaPh")],
+    "#orderPhone":      [t("labelPhone"),     t("labelPhonePh")],
+    "#orderAddress":    [t("labelAlamat"),    l === "id" ? t("labelAlamatPhID") : t("labelAlamatPhInt")],
+    "#orderCity":       [t("labelKota"),      t("labelKotaPh")],
+    "#orderProvince":   [t("labelProvinsi"), t("labelProvinsiPh")],
+    "#orderPostalCode": [t("labelKodePos"),   t("labelKodePosPh")],
+    "#orderIntZip":     [t("labelZipInt"),     t("labelZipIntPh")],
+  };
+  Object.entries(labelMap).forEach(([sel, [label, ph]]) => {
+    const el = $(sel);
+    if (!el) return;
+    const prevLabel = el.closest(".modal-field")?.querySelector(".modal-label");
+    if (prevLabel) prevLabel.textContent = label;
+    el.placeholder = ph;
+  });
+
+  const countryLabel = document.querySelector('label[for="orderCountry"]');
+  if (countryLabel) countryLabel.textContent = t("labelNegara");
+
+  const modalTotalLabel = $(".modal-total-label");
+  if (modalTotalLabel) modalTotalLabel.textContent = t("labelTotal");
+
+  const submitBtn = $(".modal-submit-btn");
+  if (submitBtn) submitBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> ${t("btnKirim")}`;
+
+  const disclaimer = $(".modal-disclaimer");
+  if (disclaimer) disclaimer.textContent = t("disclaimer");
+
+  onCountryChange();
+}
+
+function applyTranslationsOnLocationChange() {
+  applyTranslations();
+  renderPrice();
+}
+
 // ── Bootstrap ──────────────────────────────────────────────
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", bootstrap);
@@ -50,6 +281,7 @@ async function bootstrap() {
   await loadProducts();
   render();
   await detectLocation();
+  applyTranslationsOnLocationChange();
 }
 
 // ── Particle Canvas ─────────────────────────────────────────
@@ -246,21 +478,18 @@ async function detectLocation(options = {}) {
     return;
   }
 
-  // Always set browser-inferred location first (synchronous, instant)
   applyLocation(inferLocationFromBrowser());
 
-  // Then try API (async, may fail locally)
   try {
     const r = await fetch("/api/location", { headers: { accept: "application/json" } });
     if (r.ok) {
       const api = await r.json();
       if (api.countryCode) applyLocation(api);
     }
-  } catch { /* fallback sudah dipakai */ }
+  } catch { /* ignore */ }
 
-  // Try GPS if available — always show toast before requesting
   if (navigator.geolocation) {
-    showToast("Izinkan lokasi untuk hasil akurat...", 6000);
+    showToast(t("allowLocation"), 6000);
     if (options.forcePrecise) await detectPreciseByGPS();
     else detectPreciseByGPS();
   }
@@ -433,19 +662,19 @@ function detectPreciseByGPS() {
         resolve();
       },
       err => {
-        // Permission denied → show a clickable prompt in the location pill
         if (err.code === err.PERMISSION_DENIED) {
-          showToast("Lokasi diblokir — klik untuk aktifkan", 5000);
+          showToast(t("locationBlocked"), 5000);
           const locEl = $("#locationText");
-          if (locEl) locEl.textContent = "Klik untuk aktifkan lokasi";
-          locEl.style.cursor = "pointer";
-          locEl.onclick = () => {
-            // Open browser location settings / prompt
-            showToast("Izinkan akses lokasi di browser Anda", 5000);
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(() => {}, () => {}, { enableHighAccuracy: true, timeout: 8000 });
-            }
-          };
+          if (locEl) {
+            locEl.textContent = t("locationBlocked");
+            locEl.style.cursor = "pointer";
+            locEl.onclick = () => {
+              showToast(t("locationOpenSettings"), 5000);
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(() => {}, () => {}, { enableHighAccuracy: true, timeout: 8000 });
+              }
+            };
+          }
         }
         resolve();
       },
@@ -466,13 +695,12 @@ function applyLocation(loc) {
     city:     loc.city    || "",
     source:   loc.source  || "unknown",
   };
-  // Immediately update location text in UI
   const locEl = $("#locationText");
   if (locEl) locEl.textContent = formatLocationLabel();
   renderPrice();
-  // Show success toast when GPS gives us city/region
+  applyTranslationsOnLocationChange();
   if (loc.source === "gps" && (loc.city || loc.region)) {
-    showToast("Location detected!", 2000);
+    showToast(t("gpsSuccess"), 2000);
   }
 }
 
@@ -575,8 +803,8 @@ function renderPrice() {
   s(els.unitPrice,  unitText);
   s(els.totalPrice, totalText);
   s(els.qtyValue,   String(state.quantity));
-  s(els.regionEl,   domestic ? "Indonesia price" : "International price");
-  s(els.noteEl,     domestic ? "Local checkout uses Indonesian pricing." : "Outside Indonesia uses USD pricing.");
+  s(els.regionEl,   t("regionPrice"));
+  s(els.noteEl,     t("notePrice"));
   s(els.locEl,      formatLocationLabel());
 }
 
@@ -599,7 +827,7 @@ function formatMoney(currency, amount) {
 }
 
 function formatLocationLabel() {
-  if (!state.location.countryCode) return "Lokasi tidak diketahui";
+  if (!state.location.countryCode) return t("locationUnknown");
   const c = state.location.country || (state.location.countryCode === "ID" ? "Indonesia" : state.location.countryCode);
   const parts = [state.location.city, state.location.region, c].filter(Boolean);
   return parts.length ? parts.join(", ") : c;
@@ -637,7 +865,7 @@ function openOrderModal() {
 
   // If GPS hasn't been detected yet, ask for location permission first
   if (state.location.source !== "gps" && state.location.source !== "test-override" && navigator.geolocation) {
-    showToast("Izinkan lokasi untuk harga akurat...", 5000);
+    showToast(t("allowLocation"), 5000);
     detectPreciseByGPS().then(() => {
       overlay.classList.add("is-open");
       document.body.style.overflow = "hidden";
@@ -668,9 +896,7 @@ function onCountryChange() {
   const intEl = $("#intAddressFields");
   const addrEl = $("#orderAddress");
   if (addrEl) {
-    addrEl.placeholder = isID
-      ? "Nama jalan, RT/RW, Kelurahan, Kecamatan"
-      : "Street address, building, city";
+    addrEl.placeholder = isID ? t("labelAlamatPhID") : t("labelAlamatPhInt");
   }
   if (indoEl) {
     indoEl.classList.toggle("hidden", !isID);
@@ -711,16 +937,16 @@ function handleModalSubmit(e) {
   const intZip     = (fd.get("intZip")     || "").toString().trim();
   const phone      = (fd.get("phone")      || "").toString().trim();
 
-  if (!fullName)  { showToast("Nama lengkap wajib diisi", 3000); shakeField("#orderFullName"); return; }
-  if (!address)   { showToast("Alamat wajib diisi", 3000); shakeField("#orderAddress");  return; }
-  if (!country)   { showToast("Negara wajib dipilih", 3000); shakeField("#orderCountry");   return; }
+  if (!fullName)  { showToast(t("toastNamaWajib"), 3000); shakeField("#orderFullName"); return; }
+  if (!address)   { showToast(t("toastAlamatWajib"), 3000); shakeField("#orderAddress");  return; }
+  if (!country)   { showToast(t("toastNegaraWajib"), 3000); shakeField("#orderCountry");   return; }
 
   const isID = country === "ID";
   if (isID) {
-    if (!city)     { showToast("Kota wajib diisi", 3000); shakeField("#orderCity");     return; }
-    if (!province)  { showToast("Provinsi wajib diisi", 3000); shakeField("#orderProvince"); return; }
+    if (!city)     { showToast(t("toastKotaWajib"), 3000); shakeField("#orderCity");     return; }
+    if (!province)  { showToast(t("toastProvWajib"), 3000); shakeField("#orderProvince"); return; }
     if (postalCode && !/^\d{5}$/.test(postalCode)) {
-      showToast("Kode pos harus 5 digit angka", 3000);
+      showToast(t("toastKodePos"), 3000);
       shakeField("#orderPostalCode");
       return;
     }
