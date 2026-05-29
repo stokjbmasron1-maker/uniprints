@@ -277,10 +277,10 @@ async function bootstrap() {
   bindEvents();
   initDatalists();
   render();
+  detectLocation(); // non-blocking, fires immediately
   await connectSupabase();
   await loadProducts();
   render();
-  await detectLocation();
   applyTranslationsOnLocationChange();
 }
 
@@ -471,6 +471,11 @@ function normalizeProduct(row) {
 
 // ── Location ───────────────────────────────────────────────
 async function detectLocation(options = {}) {
+  // Show location prompt immediately for better UX
+  if (navigator.geolocation) {
+    showToast(T.id.allowLocation, 6000);
+  }
+
   const testLocation = readTestLocationOverride();
   if (testLocation) {
     applyLocation(testLocation);
@@ -480,16 +485,13 @@ async function detectLocation(options = {}) {
 
   applyLocation(inferLocationFromBrowser());
 
-  try {
-    const r = await fetch("/api/location", { headers: { accept: "application/json" } });
-    if (r.ok) {
-      const api = await r.json();
-      if (api.countryCode) applyLocation(api);
-    }
-  } catch { /* ignore */ }
+  // Fetch location from API in background (non-blocking)
+  fetch("/api/location", { headers: { accept: "application/json" } })
+    .then(r => r.ok ? r.json() : null)
+    .then(api => { if (api?.countryCode) applyLocation(api); })
+    .catch(() => {});
 
   if (navigator.geolocation) {
-    showToast(t("allowLocation"), 6000);
     if (options.forcePrecise) await detectPreciseByGPS();
     else detectPreciseByGPS();
   }
