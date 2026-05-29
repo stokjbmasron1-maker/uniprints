@@ -67,8 +67,8 @@ const T = {
     featureRealtime:"Real-time Price",
     featRealtimeDesc:"Harga otomatis disesuaikan dengan lokasi Anda — domestik dalam IDR, internasional dalam USD.",
     heroEyebrow:  "Premium Print Product",
-    heroSubtitle1: "Koleksi deck box berwarna dengan finishing premium.",
-    heroSubtitle2: "Pilih warna favoritmu, checkout langsung via WhatsApp.",
+    heroSubtitle1: "Deck box premium, checkout via WhatsApp.",
+    heroSubtitle2: "",
     panelTag:     "Premium Deck Box",
     locationDefault:"Indonesia",
   },
@@ -129,8 +129,8 @@ const T = {
     featureRealtime:"Real-time Price",
     featRealtimeDesc:"Prices automatically adjusted based on your location — IDR for domestic, USD for international.",
     heroEyebrow:  "Premium Print Product",
-    heroSubtitle1:"Colored deck box collection with premium finishing.",
-    heroSubtitle2:"Choose your favorite color, checkout directly via WhatsApp.",
+    heroSubtitle1:"Premium deck box, checkout via WhatsApp.",
+    heroSubtitle2:"",
     panelTag:     "Premium Deck Box",
     locationDefault:"Detecting location",
   },
@@ -205,7 +205,9 @@ function applyTranslations() {
   if (eyebrow) eyebrow.textContent = t("heroEyebrow");
 
   const subtitle = $(".hero-subtitle");
-  if (subtitle) subtitle.innerHTML = t("heroSubtitle1") + "<br />" + t("heroSubtitle2");
+  if (subtitle) {
+    subtitle.innerHTML = [t("heroSubtitle1"), t("heroSubtitle2")].filter(Boolean).join("<br />");
+  }
 
   const panelTag = $(".panel-header-tag");
   if (panelTag) panelTag.textContent = t("panelTag");
