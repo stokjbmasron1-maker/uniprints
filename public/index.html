@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="UniPrints Colorized Deck Box — premium print products dengan checkout langsung via WhatsApp." />
+    <title>UniPrints | Colorized Deck Box</title>
+    <link rel="icon" href="assets/logo.jpeg" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900;950&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="icons.js" defer></script>
+    <script type="module" src="client.js"></script>
+  </head>
+  <body>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="site-header" id="siteHeader">
+      <a class="brand" href="#hero" aria-label="UniPrints home">
+        <img src="assets/logo.jpeg" alt="Logo UniPrints" />
+        <span>UniPrints</span>
+      </a>
+      <div class="location-pill" aria-live="polite">
+        <svg class="location-pill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="location-pill-text" id="locationText">Izinkan lokasi</span>
+        <button id="detectLocation" type="button" aria-label="Deteksi ulang lokasi" title="Deteksi ulang lokasi">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <p class="hero-eyebrow">Premium Print Product</p>
+      <h1 class="hero-title">
+        Colorized<br />
+        <span class="accent-text">Deck Box</span>
+      </h1>
+      <p class="hero-subtitle">
+        Koleksi deck box berwarna dengan finishing premium.<br />
+        Pilih warna favoritmu, checkout langsung via WhatsApp.
+      </p>
+      <div class="hero-scroll-indicator" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Product -->
+    <section class="product-section" id="product">
+      <div class="product-grid">
+
+        <!-- Viewer -->
+        <div class="viewer-column">
+          <div class="viewer-topline reveal">
+            <div class="viewer-topline-text">
+              <span class="section-label">Choose Your Color</span>
+              <h2>Colorized <span class="accent-text">Deck Box</span></h2>
+            </div>
+            <div class="view-toggle" aria-label="Pilih sisi produk">
+              <button class="chip is-active" id="frontView" type="button">Front</button>
+              <button class="chip" id="backView" type="button">Back</button>
+            </div>
+          </div>
+
+          <div class="product-card reveal delay-1" id="productCard">
+            <div class="card-corner tl"></div>
+            <div class="card-corner tr"></div>
+            <div class="card-corner bl"></div>
+            <div class="card-corner br"></div>
+
+            <!-- Image area: flex-centered so image is always dead-center -->
+            <div class="card-image-area">
+              <img class="product-img" id="featuredImage" src="assets/red-front.jpeg" alt="Colorized Deck Box Red" />
+            </div>
+
+            <button class="image-nav previous" id="prevProduct" type="button" aria-label="Warna sebelumnya">
+              <span aria-hidden="true">&#8249;</span>
+            </button>
+            <button class="image-nav next" id="nextProduct" type="button" aria-label="Warna berikutnya">
+              <span aria-hidden="true">&#8250;</span>
+            </button>
+
+            <div class="product-caption">
+              <div class="product-caption-color">
+                <div class="product-caption-swatch" id="captionSwatch" style="background:#c4162a"></div>
+                <span id="featuredColor">Red</span>
+              </div>
+              <div class="product-caption-price" id="featuredPrice">Rp250.000</div>
+            </div>
+          </div>
+
+          <div class="color-rail reveal delay-2" id="colorRail" aria-label="Pilih warna"></div>
+        </div>
+
+        <!-- Buy Panel -->
+        <aside class="buy-panel" aria-label="Beli Colorized Deck Box">
+          <div class="panel-card" id="panelCard">
+            <div class="panel-header">
+              <img src="assets/logo.jpeg" alt="Logo UniPrints" />
+              <div class="panel-header-info">
+                <div class="panel-header-brand">UniPrints</div>
+                <div class="panel-header-tag">Premium Deck Box</div>
+              </div>
+            </div>
+
+            <div class="price-block">
+              <span class="price-block-label" id="priceRegion">Indonesia price</span>
+              <span class="price-block-amount" id="unitPrice">Rp250.000</span>
+              <span class="price-block-note" id="priceNote">Local checkout uses Indonesian pricing.</span>
+            </div>
+
+            <div class="selection-row">
+              <div class="selection-row-info">
+                <span class="selection-row-label">Selected</span>
+                <div class="selection-row-value">
+                  <div class="selection-swatch" id="selectedSwatch" style="background:#c4162a"></div>
+                  <span id="selectedSummary">Red deck box</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="quantity-row">
+              <span class="quantity-label">Quantity</span>
+              <div class="quantity-control">
+                <button id="quantityDown" type="button" aria-label="Kurangi jumlah"><span>&#8722;</span></button>
+                <span id="quantityValue">1</span>
+                <button id="quantityUp" type="button" aria-label="Tambah jumlah"><span>&#43;</span></button>
+              </div>
+            </div>
+
+            <div class="total-row">
+              <span class="total-label">Total</span>
+              <span class="total-amount" id="totalPrice">Rp250.000</span>
+            </div>
+
+            <button class="buy-button" id="buyButton" type="button" aria-haspopup="dialog">
+              <svg class="buy-button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <span class="buy-button-label">Order</span>
+            </button>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-section" id="features">
+      <h2 class="features-title reveal">Kenapa UniPrints?</h2>
+      <div class="features-grid">
+        <div class="feature-card reveal delay-1">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Premium Quality</h3>
+          <p>Material berkualitas tinggi dengan finishing detail untuk perlindungan maksimal deck kartu Anda.</p>
+        </div>
+        <div class="feature-card reveal delay-2">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Fast Production</h3>
+          <p>Proses produksi cepat dan langsung dikirim setelah checkout via WhatsApp.</p>
+        </div>
+        <div class="feature-card reveal delay-3">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3>6 Vibrant Colors</h3>
+          <p>Pilihan 6 warna menarik — Red, Orange, Yellow, Green, Blue, Purple — sesuai kepribadian Anda.</p>
+        </div>
+        <div class="feature-card reveal delay-1">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h3>Direct Checkout</h3>
+          <p>Checkout langsung via WhatsApp — tidak ribet, langsung terhubung dengan admin untuk konfirmasi.</p>
+        </div>
+        <div class="feature-card reveal delay-2">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Nationwide Delivery</h3>
+          <p>Pengiriman ke seluruh Indonesia dan internasional dengan tracking lengkap.</p>
+        </div>
+        <div class="feature-card reveal delay-3">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Real-time Price</h3>
+          <p>Harga otomatis disesuaikan dengan lokasi Anda — domestik dalam IDR, internasional dalam USD.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 <a href="#hero">UniPrints</a>. Premium Colorized Deck Box. Checkout via <a href="https://wa.me/6281998190083" target="_blank" rel="noreferrer">WhatsApp</a>.</p>
+    </footer>
+
+    <!-- Order Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <h2 class="modal-title" id="modalTitle">Order Details</h2>
+          </div>
+          <button class="modal-close" id="modalCancel" type="button" aria-label="Tutup">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <!-- Order summary chip -->
+        <div class="modal-order-summary" id="modalOrderSummary">
+          <div class="mos-swatch" id="mosSwatch" style="background:#c4162a"></div>
+          <span class="mos-name" id="mosName"><span class="mos-color-name" style="color:#c4162a">Red</span> Colorized <span class="accent-text">Deck Box</span></span>
+          <span class="mos-qty">x<span id="mosQty">1</span></span>
+          <span class="mos-price" id="mosPrice">Rp250.000</span>
+        </div>
+
+        <form id="modalForm" novalidate>
+          <div class="modal-section-label">Penerima</div>
+          <div class="modal-field">
+            <label class="modal-label" for="orderFullName">Nama Lengkap <span class="required">*</span></label>
+            <input class="modal-input" type="text" id="orderFullName" name="fullName" placeholder="Masukkan nama lengkap" autocomplete="name" required />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="orderPhone">No. HP / WhatsApp</label>
+            <input class="modal-input" type="tel" id="orderPhone" name="phone" placeholder="08xxxxxxxxxx" autocomplete="tel" />
+          </div>
+
+          <div class="modal-section-label" style="margin-top:16px;">Pengiriman</div>
+          <div class="modal-field">
+            <label class="modal-label" for="orderCountry">Negara <span class="required">*</span></label>
+            <select class="modal-input modal-select" id="orderCountry" name="country" autocomplete="country" required>
+              <option value="ID">Indonesia</option>
+              <option value="MY">Malaysia</option>
+              <option value="SG">Singapore</option>
+              <option value="BN">Brunei Darussalam</option>
+              <option value="TH">Thailand</option>
+              <option value="PH">Philippines</option>
+              <option value="VN">Vietnam</option>
+              <option value="MM">Myanmar</option>
+              <option value="KH">Cambodia</option>
+              <option value="LA">Laos</option>
+              <option value="TL">Timor-Leste</option>
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="AU">Australia</option>
+              <option value="NZ">New Zealand</option>
+              <option value="GB">United Kingdom</option>
+              <option value="DE">Germany</option>
+              <option value="FR">France</option>
+              <option value="NL">Netherlands</option>
+              <option value="BE">Belgium</option>
+              <option value="IT">Italy</option>
+              <option value="ES">Spain</option>
+              <option value="PT">Portugal</option>
+              <option value="SE">Sweden</option>
+              <option value="NO">Norway</option>
+              <option value="DK">Denmark</option>
+              <option value="FI">Finland</option>
+              <option value="CH">Switzerland</option>
+              <option value="AT">Austria</option>
+              <option value="PL">Poland</option>
+              <option value="CZ">Czech Republic</option>
+              <option value="HU">Hungary</option>
+              <option value="RO">Romania</option>
+              <option value="RU">Russia</option>
+              <option value="JP">Japan</option>
+              <option value="KR">South Korea</option>
+              <option value="CN">China</option>
+              <option value="TW">Taiwan</option>
+              <option value="HK">Hong Kong</option>
+              <option value="IN">India</option>
+              <option value="PK">Pakistan</option>
+              <option value="BD">Bangladesh</option>
+              <option value="LK">Sri Lanka</option>
+              <option value="AE">United Arab Emirates</option>
+              <option value="SA">Saudi Arabia</option>
+              <option value="QA">Qatar</option>
+              <option value="KW">Kuwait</option>
+              <option value="BH">Bahrain</option>
+              <option value="OM">Oman</option>
+              <option value="EG">Egypt</option>
+              <option value="ZA">South Africa</option>
+              <option value="BR">Brazil</option>
+              <option value="MX">Mexico</option>
+              <option value="AR">Argentina</option>
+            </select>
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="orderAddress">Alamat Jalan <span class="required">*</span></label>
+            <textarea class="modal-input modal-textarea" type="text" id="orderAddress" name="address" placeholder="Nama jalan, RT/RW, Kelurahan, Kecamatan" rows="2"></textarea>
+          </div>
+          <div id="indoAddressFields">
+            <div class="modal-row">
+              <div class="modal-field">
+                <label class="modal-label" for="orderCity">Kota / Kabupaten <span class="required">*</span></label>
+                <input class="modal-input" type="text" id="orderCity" name="city" placeholder="Kota" autocomplete="address-level2" list="cityList" required />
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="orderProvince">Provinsi <span class="required">*</span></label>
+                <input class="modal-input" type="text" id="orderProvince" name="province" placeholder="Provinsi" autocomplete="address-level1" list="provinceList" required />
+              </div>
+            </div>
+            <div class="modal-field">
+              <label class="modal-label" for="orderPostalCode">Kode Pos</label>
+              <input class="modal-input" type="text" id="orderPostalCode" name="postalCode" placeholder="5 angka" inputmode="numeric" maxlength="5" autocomplete="postal-code" />
+            </div>
+          </div>
+          <div class="modal-field hidden" id="intAddressFields">
+            <label class="modal-label" for="orderIntZip">Zip / Postal Code</label>
+            <input class="modal-input" type="text" id="orderIntZip" name="intZip" placeholder="Zip code" autocomplete="postal-code" />
+          </div>
+
+          <div class="modal-total-row">
+            <span class="modal-total-label">Total Pembayaran</span>
+            <span class="modal-total-amount" id="modalTotalPrice">Rp250.000</span>
+          </div>
+
+          <button class="modal-submit-btn" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Buy via WhatsApp
+          </button>
+
+          <!-- Autocomplete datalists -->
+          <datalist id="cityList"></datalist>
+          <datalist id="provinceList"></datalist>
+          <p class="modal-disclaimer">Data Anda hanya digunakan untuk memproses pesanan via WhatsApp.</p>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  </body>
+</html>
