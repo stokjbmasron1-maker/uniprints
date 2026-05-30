@@ -161,6 +161,31 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
 }
 
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+}
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 850;
+  transition: background 160ms, color 160ms, border-color 160ms;
+}
+.site-nav a:hover {
+  color: var(--bg-dark);
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
 .location-pill {
   display: flex;
   align-items: center;
